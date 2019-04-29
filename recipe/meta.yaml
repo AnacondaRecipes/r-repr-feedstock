@@ -1,4 +1,4 @@
-{% set version = '0.15.0' %}
+{% set version = '0.19.2' %}
 
 {% set posix = 'm2-' if win else '' %}
 {% set native = 'm2w64-' if win else '' %}
@@ -11,19 +11,20 @@ source:
   url:
     - {{ cran_mirror }}/src/contrib/repr_{{ version }}.tar.gz
     - {{ cran_mirror }}/src/contrib/Archive/repr/repr_{{ version }}.tar.gz
-  sha256: 00a2b8ab86bbf04b7f79e64d38ce26fe03e5069699557be27ae0de165343cf57
+  sha256: dd4d766d95e8e75f90c05e50e44e759139a47b1477748f4cf9683d35a7fa10d6
 
 build:
   merge_build_host: True  # [win]
   # If this is a new build for the same version, increment the build number.
   number: 0
+  noarch: generic
 
   # This is required to make R link correctly on Linux.
   rpaths:
     - lib/R/lib/
     - lib/
 
-# Suggests: methods, highr, Cairo, stringr, testthat
+# Suggests: methods, highr, Cairo, stringr, testthat, leaflet
 requirements:
   build:
     - {{posix}}zip               # [win]
@@ -32,11 +33,13 @@ requirements:
     - r-base
     - r-base64enc
     - r-htmltools
+    - r-jsonlite
 
   run:
     - r-base
     - r-base64enc
     - r-htmltools
+    - r-jsonlite
 
 test:
   commands:
@@ -55,6 +58,7 @@ about:
   license: GPL-3
   summary: String and binary representations of objects for several formats / mime types.
   license_family: GPL3
+  license_file: '{{ environ["PREFIX"] }}/lib/R/share/licenses/GPL-3'
 
 extra:
   recipe-maintainers:
@@ -65,24 +69,24 @@ extra:
 
 # Package: repr
 # Title: Serializable Representations
-# Version: 0.15.0
-# Authors@R: c( person('Philipp', 'Angerer', email = 'phil.angerer@gmail.com', role = c('aut', 'cre')), person('Thomas', 'Kluyver', email = 'thomas@kluyver.me.uk', role = 'aut'), person('Jan', 'Schulz', email = 'jasc@gmx.net', role = 'aut'), person('abielr', role = 'ctb'), person('Denilson', 'Figueiredo de Sa', role = 'ctb'), person('Jim', 'Hester', role = 'ctb'), person('karldw', role = 'ctb'), person('Carson', 'Sievert', role = 'ctb') )
+# Version: 0.19.2
+# Authors@R: c( person('Philipp', 'Angerer', email = 'phil.angerer@gmail.com', role = c('aut', 'cre'), comment = c(ORCID = "0000-0002-0369-2888")), person('Thomas', 'Kluyver', email = 'thomas@kluyver.me.uk', role = 'aut'), person('Jan', 'Schulz', email = 'jasc@gmx.net', role = 'aut'), person('abielr', role = 'ctb'), person('Denilson', 'Figueiredo de Sa', role = 'ctb'), person('Jim', 'Hester', role = 'ctb'), person('karldw', role = 'ctb'), person('Dave', 'Foster', role = 'ctb'), person('Carson', 'Sievert', role = 'ctb') )
 # Maintainer: Philipp Angerer <phil.angerer@gmail.com>
 # Description: String and binary representations of objects for several formats / mime types.
 # Depends: R (>= 3.0.1)
-# Imports: utils, grDevices, htmltools, base64enc
-# Suggests: methods, highr, Cairo, stringr, testthat
-# Enhances: data.table, dplyr, htmlwidgets
+# Imports: utils, grDevices, htmltools, jsonlite, base64enc
+# Suggests: methods, highr, Cairo, stringr, testthat, leaflet
+# Enhances: data.table, dplyr, htmlwidgets, vegalite, plotly, geojsonio
 # License: GPL-3
 # LazyData: true
 # Encoding: UTF-8
-# Collate: 'generics.r' 'options.r' 'package.r' 'repr_datatable.r' 'utils.r' 'repr_list.r' 'repr_vector.r' 'repr_factor.r' 'repr_function.r' 'repr_help_files_with_topic.r' 'repr_htmlwidget.r' 'repr_matrix_df.r' 'repr_packageIQR.r' 'repr_recordedplot.r'
-# RoxygenNote: 6.0.1.9000
+# Collate: 'generics.r' 'options.r' 'package.r' 'repr_datatable.r' 'repr_datetime.r' 'utils.r' 'repr_list.r' 'repr_vector.r' 'repr_factor.r' 'repr_function.r' 'repr_help_files_with_topic.r' 'repr_htmlwidget.r' 'repr_matrix_df.r' 'repr_packageIQR.r' 'repr_plotly.r' 'repr_recordedplot.r' 'repr_spatial.r' 'repr_ts.r' 'repr_vega.r'
+# RoxygenNote: 6.1.1
 # NeedsCompilation: no
-# Packaged: 2018-05-18 07:54:03 UTC; phil
-# Author: Philipp Angerer [aut, cre], Thomas Kluyver [aut], Jan Schulz [aut], abielr [ctb], Denilson Figueiredo de Sa [ctb], Jim Hester [ctb], karldw [ctb], Carson Sievert [ctb]
+# Packaged: 2019-02-06 11:59:10 UTC; phil
+# Author: Philipp Angerer [aut, cre] (<https://orcid.org/0000-0002-0369-2888>), Thomas Kluyver [aut], Jan Schulz [aut], abielr [ctb], Denilson Figueiredo de Sa [ctb], Jim Hester [ctb], karldw [ctb], Dave Foster [ctb], Carson Sievert [ctb]
 # Repository: CRAN
-# Date/Publication: 2018-05-18 09:54:20 UTC
+# Date/Publication: 2019-02-06 13:10:03 UTC
 
 # See
 # http://docs.continuum.io/conda/build.html for
